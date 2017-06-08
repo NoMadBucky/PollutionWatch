@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Permit Holder Details</title>
+</head>
+<body style="background-color:#D3D3D3">
+  <div style="position:fixed; padding-top:10px; padding-left:10px"><a href="https://www.mindfulpracticelaw.com/"><img src="https://static.wixstatic.com/media/c53e75_a451b81283564cdbabfbbc8c2d43f4dd.png/v1/fill/w_508,h_275,al_c,usm_0.66_1.00_0.01/c53e75_a451b81283564cdbabfbbc8c2d43f4dd.png" width="339" height="183"></img></a></div>
+  <div style="text-align:center; float: center; margin-right:350px; margin-left:350px"><img src={{ static_map }} style="width: 450px; height: 450px; border-radius:25px; padding: 4px; background-color:white"/></div>
+  <p>Details for <strong>{{ permittee.cwp_name }}</strong>:</p>
+  <p>State Permit Number: {{ permittee.source_id }}
+  <p>Facility Registry Service ID: <a target="_blank" href="https://echo.epa.gov/detailed-facility-report?fid={{ permittee.registry_id }}">{{ permittee.registry_id }}</a> (follow link for EPA Detailed Facility Report)</p>
+  <p>Address:<br>{{ permittee.cwp_street }}<br>{{ permittee.cwp_city }}, {{ permittee.cwp_state }}</p>
+  <p>Location: {{ permittee.fac_lat}},{{permittee.fac_long}}</p>
+  <p>Listed in Current Violation with EPA? {{ permittee.cwp_current_viol }}</p>
+  <p>Quarters in noncompliance over the last 3 years: {{ permittee.cwp_qtrs_in_nc }}</p>
+  <p>Days since last inspection: {{ permittee.cwp_days_last_inspection }}</p>
+  <p><a href="/water/{{ permittee.source_id }}/ViolationTable">Summary of Effluent Violations</a> (<a href="{{ download_file_loc }}"download>Click here</a> to download all effluent data in csv format)</p>
+</body>
+</html>

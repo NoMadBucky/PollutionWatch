@@ -1,0 +1,13 @@
+{% load render_table from django_tables2 %}
+{% load static %}
+<html>
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+</head>
+<body>
+<p>You entered: <strong>{{ query }} </strong></p>
+<p>The coordinates assocated with that address are: {{ qhome.latitude }}, {{ qhome.longitude }}</p>
+{% render_table table %}
+</body>
+</html>

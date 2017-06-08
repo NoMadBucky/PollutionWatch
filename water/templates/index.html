@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Index</title>
+</head>
+<body style="background-color:#D3D3D3">
+{% if violator_list %}
+<div style="position: fixed; padding-top:10px; padding-left:10px"><a href="https://www.mindfulpracticelaw.com/"><img src="https://static.wixstatic.com/media/c53e75_a451b81283564cdbabfbbc8c2d43f4dd.png/v1/fill/w_508,h_275,al_c,usm_0.66_1.00_0.01/c53e75_a451b81283564cdbabfbbc8c2d43f4dd.png" width="339" height="183"></img></a></div>
+<div style="text-align:center; float: center; margin-right:350px; margin-left:350px"><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1dvugz6RO3BjUXCTBkbd_FPq0h-I" width="450" height="450" border="2" style="border-radius: 25px"></iframe></div>
+<table border="2" style="border-radius: 25px; padding: 6px; background-color:white">
+        <caption style="padding-top:10px; padding-bottom:10px; white-space:nowrap"><font size = '+3'><b>Wisconsin Facilities Listed in Current Violation of the Clean Water Act</b></font>
+        <br><font size = '+1'>based on EPA data as of {{ violator_list_created_date }}</font>
+        </caption>
+    <thead style="display:block; width:100%; position:relative">
+    <tr bgcolor="#0288D1" style="color:white; font-family:arial">
+        <th style="width:5%; min-width:60px; font-weight:normal">Map Number</th>
+        <th style="width:15%; min-width:124px; font-weight:normal">Permittee Name</th>
+        <th style="width:10%; min-width:84px; font-weight:normal">Permit Number</th>
+        <th style="width:10%; min-width:84px; font-weight:normal">Facility Type</th>
+        <th style="width:10%; min-width:98px; font-weight:normal">Quarters <br>in Violation <br>(Three Years)</th>
+        <th style="width:10%; min-width:98px; font-weight:normal">Effluent <br>Violations <br>(Three Years)</th>
+        <th style="width:30%; min-width:260px; font-weight:normal">Pollutants at Issue</th>
+        <th style="width:10%; min-width:80px; font-weight:normal">Days Since Last Inspection</th>
+    </tr>
+    </thead>
+    <tbody style="background-color:white; display:block; width:100%; height:360px; overflow-y:scroll">
+    {% for permittee in violator_list %}
+        <tr>
+            <td style="width:5%; min-width:60px">{{ permittee.map_num }}</td>
+            <td style="width:15%; min-width:124px">{{ permittee.cwp_name }}</td>
+            <td style="width:10%; min-width:84px"><a href="/water/{{ permittee.source_id }}/">{{ permittee.source_id }}</a></td>
+            <td style="width:10%; min-width:84px">{% if permittee.cwp_facility_type_indicator == 'NON-POTW' %}
+                Industrial
+                {% elif permittee.cwp_facility_type_indicator == 'POTW' %}
+                Wastewater Treatment
+                {% endif %}</td>
+            <td style="width:10%; min-width:98px">{{ permittee.cwp_qtrs_in_nc }}</td>
+            <td style="width:10%; min-width:98px">{{ permittee.cwp_e90 }}</td>
+            <td style="width:30%; min-width:260px">{{ permittee.poll_in_violation }}</td>
+            <td style="width:10%; min-width:80px">{{ permittee.cwp_days_last_inspection }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+    <p>No list available.</p>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Permit Holder Details</title>
+</head>
+<body>
+<p>Details for <strong>{{ permittee.cwp_name }}</strong>:</p>
+<p>State Permit Number: {{ permittee.source_id }}
+<p>Facility Registry Service (FRS) ID: <a target="_blank" href="https://echo.epa.gov/detailed-facility-report?fid={{ permittee.registry_id }}">{{ permittee.registry_id }}</a> (follow link for EPA Detailed Facility Report)</p>
+<p>Address:<br>{{ permittee.cwp_street }}<br>{{ permittee.cwp_city }}, {{ permittee.cwp_state }}</p>
+<p>Current EPA compliance status: {{ permittee.cwp_current_snc_status }}
+    {% for key, value in compliance_dict.items %}
+        {% if key in snc_code %}
+            {{ value }}
+        {% endif %}
+    {% endfor %}</p>
+<p>Quarters in noncompliance over the last 3 years: {{ permittee.cwp_qtrs_in_nc }}</p>
+<p>Inspections over the last 3 years: {{ permittee.cwp_inspection_count }}</p>
+<p><a href="/water/{{ permittee.source_id }}/EffluentData">Summary of Effluent Data</a> (<a href="{{ download_file_loc }}"download>Click here</a> to download all effluent data in csv format)</p>
+<p><a href="/water/{{ permittee.source_id }}/violations">List of Violations</a>
+<p>Coordinates listed with EPA: {{ permittee.fac_lat}}, {{permittee.fac_long}}</p>
+<p>Map not available.</p>
+</body>
+</html>

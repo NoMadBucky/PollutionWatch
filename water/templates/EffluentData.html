@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Effluent Data</title>
+</head>
+<body>
+<p>Data current as of {{ effluent_list_created_date }}</p>
+<p>Go to <a href="/water/{{ permittee.source_id }}/violations">List of Violations</a></p>
+{% if effluent_list %}
+    <table border="1", cellpadding="1">
+        <caption>Effluent Data for {{ permittee.cwp_name }}</caption>
+    <tr bgcolor="GREY">
+        <th>Parameter</th>
+        <th>Limit</th>
+        <th>Unit</th>
+        <th>Monitoring Period End</th>
+        <th>DMR Value</th>
+        <th>Limit (SU)</th>
+        <th>SU Desc</th>
+        <th>DMR Value (SU)</th>
+        <th>Value Received</th>
+        <th>Violation Description</th>
+        <th>Violation Severity</th>
+    </tr>
+    {% for item in effluent_list %}
+    <tr>
+        <td>{{ item.parameter_desc }}</td>
+        <td>{{ item.limit_value_nmbr}}</td>
+        <td>{{ item.limit_unit_desc }}</td>
+        <td>{{ item.monitoring_period_end_date }}</td>
+        <td>{{ item.dmr_value_nmbr }}</td>
+        <td>{{ item.limit_value_standard_units }}</td>
+        <td>{{ item.standard_unit_desc }}</td>
+        <td>{{ item.dmr_value_standard_units }}</td>
+        <td>{{ item.value_received_date }} </td>
+        <td>{{ item.violation_desc }}</td>
+        <td>{{ item.violation_severity }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No list available.</p>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% load django_tables2 %}
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+
+</head>
+<body>
+    <div style="padding-top:10px; padding-left:10px"><a href="https://www.mindfulpracticelaw.com/"><img src="https://static.wixstatic.com/media/c53e75_a451b81283564cdbabfbbc8c2d43f4dd.png/v1/fill/w_508,h_275,al_c,usm_0.66_1.00_0.01/c53e75_a451b81283564cdbabfbbc8c2d43f4dd.png" width="339" height="183"></img></a></div>
+    <p style="text-align:center"><font size="+3">Effluent Violation Information for {{ permittee.cwp_name }}</font></p>
+    <div style="text-align:center; width:100%">{% render_table table %}</div>
+</body>
+</html>
