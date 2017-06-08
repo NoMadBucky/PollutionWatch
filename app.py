@@ -11,5 +11,5 @@ mod_wsgi.server.start(
   '--threads', os.environ.get('MOD_WSGI_THREADS', '5'),
   '--url-alias', '/static/', './static/',
   '--application-type', 'module',
-  '--entry-point', 'demo.wsgi',
+  '--entry-point', 'mysite.wsgi',
 )
