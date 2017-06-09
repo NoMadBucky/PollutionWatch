@@ -1,4 +1,4 @@
 mod_wsgi
 Django
 django-tables2
-easy_maps
+django-easy-maps
