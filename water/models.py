@@ -1,7 +1,6 @@
 from django.db import models
 from django import forms
 from datetime import date
-from adaptor.fields import CharField, IntegerField, DecimalField
 
 class Permittees(models.Model):
     map_num = models.CharField(max_length = 2, default = '00')
