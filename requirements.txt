@@ -2,4 +2,4 @@ mod_wsgi
 Django
 django-tables2
 django-easy-maps
-django-adaptors
+csvImporter

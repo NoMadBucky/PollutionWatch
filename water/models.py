@@ -1,7 +1,7 @@
 from django.db import models
 from django import forms
 from datetime import date
-from adaptor.model import CsvDbModel
+from csvImporter.model import CsvDbModel
 from adaptor.fields import CharField, IntegerField, DecimalField
 
 class Permittees(models.Model):
