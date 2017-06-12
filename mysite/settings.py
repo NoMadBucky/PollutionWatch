@@ -25,7 +25,7 @@ SECRET_KEY = '212xtf%g#f)0($#0rht-3y93z$ua#u$nx#rdj(6uhxc*&$f-yt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [pollution-watch-wis-pollution-info.1d35.starter-us-east-1.openshiftapps.com]
 
 
 # Application definition
