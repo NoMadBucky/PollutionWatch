@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from water.models import Effluent_Data, Location_Data
+from water.models import Permittees, Effluent_Data, Location_Data
 
 class Effluent_Data_Table(tables.Table):
     class Meta:
@@ -14,3 +14,7 @@ class Location_Table(tables.Table):
         model = Location_Data
         fields = ('cwp_name', 'fac_lat', 'fac_long', 'd_qhome')
         order_by = ('d_qhome')
+
+class water_permittees(tables.Table):
+    class Meta:
+        model = Permittees
