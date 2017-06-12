@@ -12,16 +12,36 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 
 violator_file = '/Users/barry_b_esq/Google Drive/PollutionWatch/webmaterials/EPAWaterViolators.csv'
-violator_csv_list = open()
-
-    MyCSvModel.import_data(data=open(violator_file))
-eff_viols_file = '/Users/barry_b_esq/Google Drive/PollutionWatch/webmaterials/WI_NPDES_EFF_VIOLATIONS.csv'
-eff_viols_csv_list = MyCSvModel2.import_data(data=open(eff_viols_file))
+violator_list = []
+f = open(violator_file, 'r')
+for line in f:
+    line =  line.split(',')
+    tmp=Permittees.objects.create()
+    tmp.map_num = line[0]
+    tmp.source_id = line[1]
+    tmp.registry_id = line[2]
+    tmp.cwp_name = line[3]
+    tmp.cwp_street = line[4]
+    tmp.cwp_city = line[5]
+    tmp.cwp_state = line[6]
+    tmp.cwp_facility_type_indicator = line[7]
+    tmp.cwp_major_minor = line[8]
+    tmp.cwp_qtrs_in_nc = line[9]
+    tmp.cwp_current_viol = line[10]
+    tmp.fac_lat = line[11]
+    tmp.fac_long = line[12]
+    tmp.cwp_e90 = line[13]
+    tmp.cwp_formal_ea = line[14]
+    tmp.cwp_days_last_inspection = line[15]
+    tmp.poll_in_violation = line[16]
+    tmp.save()
+    violator_list.append(tmp)
+f.close()
 
 def index(request):
     violator_list_ctime = os.path.getctime(violator_file)
     violator_list_created_date = datetime.fromtimestamp(violator_list_ctime).strftime('%A, %B %d, %Y')
-    return render(request, 'index.html', {'violator_list': violator_csv_list, 'violator_list_created_date': violator_list_created_date})
+    return render(request, 'index.html', {'violator_list': violator_list, 'violator_list_created_date': violator_list_created_date})
 
 def details(request, source_id):
     for permittee in violator_csv_list:
