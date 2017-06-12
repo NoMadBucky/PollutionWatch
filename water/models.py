@@ -23,12 +23,6 @@ class Permittees(models.Model):
     def __str__(self):
         return 'Name: %s, WPDES: %s, Reg_ID: %s' % (self.cwp_name, self.source_id, self.registry_id)
 
-class MyCSvModel(CsvDbModel):
-    class Meta:
-        delimiter = ','
-        has_header = False
-        dbModel = Permittees
-
 class Effluent_Data(models.Model):
     npdes_id = models.CharField(max_length = 9, default = 'NA', verbose_name='Permit Number')
     version_nmbr = models.IntegerField(null=True)
@@ -66,12 +60,6 @@ class Effluent_Data(models.Model):
     rnc_resolution_date = models.DateField(blank=True, null=True)
     statistical_base_code = models.CharField(max_length=3, default='NA')
     statistical_base_monthly_avg = models.CharField(max_length=1, blank=True)
-
-class MyCSvModel2(CsvDbModel):
-    class Meta:
-        delimiter = ','
-        has_header = True
-        dbModel = Effluent_Data
 
 class Location_Data(models.Model):
     cwp_name = models.CharField(max_length = 150)

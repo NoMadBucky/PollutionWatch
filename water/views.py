@@ -6,13 +6,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django_tables2 import RequestConfig
 from water.tables import Effluent_Data_Table, Location_Table
-from water.models import MyCSvModel, MyCSvModel2, Location_Data
+from water.models import Permittees, Effluent_Data, Location_Data
 from geopy.distance import distance as geopy_distance
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 
 violator_file = '/Users/barry_b_esq/Google Drive/PollutionWatch/webmaterials/EPAWaterViolators.csv'
-violator_csv_list = MyCSvModel.import_data(data=open(violator_file))
+violator_csv_list = open()
+
+    MyCSvModel.import_data(data=open(violator_file))
 eff_viols_file = '/Users/barry_b_esq/Google Drive/PollutionWatch/webmaterials/WI_NPDES_EFF_VIOLATIONS.csv'
 eff_viols_csv_list = MyCSvModel2.import_data(data=open(eff_viols_file))
 
