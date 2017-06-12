@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e3bc981-cfed-436b-86aa-e2ef4f213fd2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/settings.py" afterPath="$PROJECT_DIR$/mysite/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,11 +48,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="269">
-              <caret line="27" column="92" lean-forward="false" selection-start-line="27" selection-start-column="92" selection-end-line="27" selection-end-column="92" />
+              <caret line="27" column="94" lean-forward="false" selection-start-line="27" selection-start-column="94" selection-end-line="27" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -294,10 +303,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="269">
-          <caret line="27" column="92" lean-forward="false" selection-start-line="27" selection-start-column="92" selection-end-line="27" selection-end-column="92" />
+          <caret line="27" column="94" lean-forward="false" selection-start-line="27" selection-start-column="94" selection-end-line="27" selection-end-column="94" />
           <folding />
         </state>
       </provider>
