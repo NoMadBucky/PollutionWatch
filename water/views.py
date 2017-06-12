@@ -11,7 +11,7 @@ from geopy.distance import distance as geopy_distance
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 
-violator_file = '/Users/barry_b_esq/Google Drive/PollutionWatch/webmaterials/EPAWaterViolators.csv'
+violator_file = 'EPAWaterViolators.csv'
 violator_list = []
 f = open(violator_file, 'r')
 for line in f:
