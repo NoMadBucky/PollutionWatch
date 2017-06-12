@@ -46,7 +46,6 @@ def index(request):
 def details(request, source_id):
     for permittee in violator_csv_list:
         if source_id in permittee.source_id:
-            geolocator = Nominatim()
             download_file_loc = ("https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?p_id=" + permittee.source_id + "&start_date=01/01/2013&end_date=03/31/2016")
             permittee.latitude = str(permittee.fac_lat)
             permittee.longitude = str(permittee.fac_long)
