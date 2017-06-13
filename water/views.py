@@ -10,33 +10,36 @@ from water.models import Permittees, Effluent_Data, Location_Data
 from geopy.distance import distance as geopy_distance
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
+from django.db.utils import OperationalError
 
 violator_file = 'EPAWaterViolators.csv'
 violator_list = []
 f = open(violator_file, 'r')
-for line in f:
-    line =  line.split(',')
-    tmp=Permittees.objects.create()
-    tmp.map_num = line[0]
-    tmp.source_id = line[1]
-    tmp.registry_id = line[2]
-    tmp.cwp_name = line[3]
-    tmp.cwp_street = line[4]
-    tmp.cwp_city = line[5]
-    tmp.cwp_state = line[6]
-    tmp.cwp_facility_type_indicator = line[7]
-    tmp.cwp_major_minor = line[8]
-    tmp.cwp_qtrs_in_nc = line[9]
-    tmp.cwp_current_viol = line[10]
-    tmp.fac_lat = line[11]
-    tmp.fac_long = line[12]
-    tmp.cwp_e90 = line[13]
-    tmp.cwp_formal_ea = line[14]
-    tmp.cwp_days_last_inspection = line[15]
-    tmp.poll_in_violation = line[16]
-    tmp.save()
-    violator_list.append(tmp)
-f.close()
+try:
+    for line in f:
+        line =  line.split(';')
+        tmp = Permittees.objects.create(
+            map_num = line[0],
+            source_id = line[1],
+            registry_id = line[2],
+            cwp_name = line[3],
+            cwp_street = line[4],
+            cwp_city = line[5],
+            cwp_state = line[6],
+            cwp_facility_type_indicator = line[7],
+            cwp_major_minor = line[8],
+            cwp_qtrs_in_nc = line[9],
+            cwp_current_viol = line[10],
+            fac_lat = line[11],
+            fac_long = line[12],
+            cwp_e90 = line[13],
+            cwp_formal_ea = line[14],
+            cwp_days_last_inspection = line[15],
+            poll_in_violation = line[16])
+        violator_list.append(tmp)
+    f.close()
+except OperationalError:
+    pass
 
 def index(request):
     violator_list_ctime = os.path.getctime(violator_file)
