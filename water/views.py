@@ -41,8 +41,9 @@ try:
 except OperationalError:
     pass
 
-eff_viols_csv_list = 'WI_NPDES_EFF_VIOLATIONS.csv'
-f = open(eff_viols_csv_list, 'r')
+eff_viols_csv_file = 'WI_NPDES_EFF_VIOLATIONS.csv'
+eff_viols_csv_list = []
+f = open(eff_viols_csv_file, 'r')
 try:
     for line in f:
         line = line.split(';')
@@ -83,6 +84,7 @@ try:
             rnc_resolution_date = line[33],
             statistical_base_code = line[34],
             statistical_base_monthly_avg = line[35])
+        eff_viols_csv_list.append(tmp)
     f.close()
 except OperationalError:
     pass
