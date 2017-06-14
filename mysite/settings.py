@@ -26,7 +26,13 @@ SECRET_KEY = '212xtf%g#f)0($#0rht-3y93z$ua#u$nx#rdj(6uhxc*&$f-yt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-allowed_hosts = ['10.128.29.138', '10.128.29.75', '10.128.29.140', '10.128.29.230']  # specify complete host names here
+from socket import gethostname
+ALLOWED_HOSTS = [
+    gethostname(), # For internal OpenShift load balancer security purposes.
+    os.environ.get('http://pollution-watch-wis-pollution-info.1d35.starter-us-east-1.openshiftapps.com/'), # Dynamically map to the OpenShift gear name.
+    #'example.com', # First DNS alias (set up in the app)
+    #'www.example.com', # Second DNS alias (set up in the app)
+]
 
 # Application definition
 
