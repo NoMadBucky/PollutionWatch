@@ -83,8 +83,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="27" column="144" lean-forward="false" selection-start-line="27" selection-start-column="144" selection-end-line="27" selection-end-column="144" />
+            <state relative-caret-position="350">
+              <caret line="27" column="134" lean-forward="false" selection-start-line="27" selection-start-column="96" selection-end-line="27" selection-end-column="134" />
               <folding />
             </state>
           </provider>
@@ -614,8 +614,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="27" column="144" lean-forward="false" selection-start-line="27" selection-start-column="144" selection-end-line="27" selection-end-column="144" />
+        <state relative-caret-position="350">
+          <caret line="27" column="134" lean-forward="false" selection-start-line="27" selection-start-column="96" selection-end-line="27" selection-end-column="134" />
           <folding />
         </state>
       </provider>
