@@ -26,7 +26,7 @@ SECRET_KEY = '212xtf%g#f)0($#0rht-3y93z$ua#u$nx#rdj(6uhxc*&$f-yt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-allowed_hosts = ['10.128.29.138']  # specify complete host names here
+allowed_hosts = ['10.128.29.138', '10.128.29.75', '10.128.29.140', '10.128.29.230']  # specify complete host names here
 
 # Application definition
 
