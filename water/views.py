@@ -41,13 +41,59 @@ try:
 except OperationalError:
     pass
 
+eff_viols_csv_list = 'WI_NPDES_EFF_VIOLATIONS.csv'
+f = open(eff_viols_csv_list, 'r')
+try:
+    for line in f:
+        line = line.split(';')
+        tmp = Effluent_Data.objects.create(
+            npdes_id = line[0],
+            version_nmbr = line[1],
+            activity_id=line[2],
+            npdes_violation_id = line[3],
+            perm_feature_nmbr = line[4],
+            permit_activity_id = line[5],
+            dmr_form_value_id = line[6],
+            dmr_value_nmbr = line[7],
+            dmr_value_id = line[8],
+            dmr_parameter_id = line[9],
+            nodi_code = line[10],
+            adjusted_dmr_value_nmbr = line[11],
+            violation_type_code = line[12],
+            violation_type_desc = line[13],
+            violation_code = line[14],
+            violation_desc = line[15],
+            parameter_code = line[16],
+            parameter_desc = line[17],
+            monitoring_period_end_date = line[18],
+            exceedance_pct = line[19],
+            value_qualifier_code = line[20],
+            unit_code = line[21],
+            value_received_date = line[22],
+            days_late = line[23],
+            adjusted_dmr_standard_units = line[24],
+            limit_id = line[25],
+            dmr_value_standard_units = line[26],
+            value_type_code = line[27],
+            rnc_detection_code = line[28],
+            rnc_detection_desc = line[29],
+            rnc_detection_date = line[30],
+            rnc_resolution_code = line[31],
+            rnc_resolution_desc = line[32],
+            rnc_resolution_date = line[33],
+            statistical_base_code = line[34],
+            statistical_base_monthly_avg = line[35])
+    f.close()
+except OperationalError:
+    pass
+
 def index(request):
     violator_list_ctime = os.path.getctime(violator_file)
     violator_list_created_date = datetime.fromtimestamp(violator_list_ctime).strftime('%A, %B %d, %Y')
     return render(request, 'index.html', {'violator_list': violator_list, 'violator_list_created_date': violator_list_created_date})
 
 def details(request, source_id):
-    for permittee in violator_csv_list:
+    for permittee in violator_list:
         if source_id in permittee.source_id:
             download_file_loc = ("https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?p_id=" + permittee.source_id + "&start_date=01/01/2013&end_date=03/31/2016")
             permittee.latitude = str(permittee.fac_lat)
@@ -94,7 +140,8 @@ def ViolationTable(request, source_id):
 #    effluent_list_created_date = datetime.fromtimestamp(effluent_list_ctime).strftime('%A, %B %d, %Y')
     indiv_effluent_list = []
     count = 0
-    for permittee in violator_csv_list:
+
+    for permittee in violator_list:
         if source_id in permittee.source_id:
             for violation in eff_viols_csv_list:
                 if source_id in violation.npdes_id:
