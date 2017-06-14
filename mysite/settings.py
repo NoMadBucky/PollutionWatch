@@ -26,22 +26,7 @@ SECRET_KEY = '212xtf%g#f)0($#0rht-3y93z$ua#u$nx#rdj(6uhxc*&$f-yt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-class FilterHostMiddleware(object):
-
-    def process_request(self, request):
-
-        allowed_hosts = ['pollution-watch-wis-pollution-info.1d35.starter-us-east-1.openshiftapps.com', 'localhost']  # specify complete host names here
-        host = request.META.get('HTTP_HOST')
-
-        if host[len(host)-10:] == 'dyndns.org':  # if the host ends with dyndns.org then add to the allowed hosts
-            allowed_hosts.append(host)
-        elif host[:7] == '10.128.39':  # if the host starts with 192.168 then add to the allowed hosts
-            allowed_hosts.append(host)
-
-        if host not in allowed_hosts:
-            raise HttpResponseForbidden
-
-        return None
+allowed_hosts = ['*']  # specify complete host names here
 
 # Application definition
 
