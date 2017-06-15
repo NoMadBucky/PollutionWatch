@@ -108,17 +108,16 @@ def ViolationTable(request, source_id):
     count = 0
 
     for permittee in violator_list:
-        if source_id in permittee.source_id:
-            for violation in eff_viols_csv_list:
-                if source_id in violation.npdes_id:
-                    indiv_effluent_list.append(violation)
-                    count = count + 1
-            table = Effluent_Data_Table(indiv_effluent_list)
-            table.paginate(page=request.GET.get('page', 1), per_page=25)
-            if count > 0:
-                return render(request, 'ViolationTable.html', {'table': table, 'permittee': permittee})
-            else:
-                return HttpResponse('No effluent data available')
+        for violation in eff_viols_csv_list:
+            if source_id in violation.npdes_id:
+                indiv_effluent_list.append(violation)
+                count = count + 1
+        table = Effluent_Data_Table(indiv_effluent_list)
+        table.paginate(page=request.GET.get('page', 1), per_page=25)
+        if count > 0:
+            return render(request, 'ViolationTable.html', {'table': table, 'permittee': permittee})
+        else:
+            return HttpResponse('No effluent data available')
 
 def search(request):
     return render(request, 'search.html')
