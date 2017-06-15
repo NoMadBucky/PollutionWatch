@@ -26,8 +26,7 @@ SECRET_KEY = '212xtf%g#f)0($#0rht-3y93z$ua#u$nx#rdj(6uhxc*&$f-yt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-from socket import gethostname, gethostbyname
-ALLOWED_HOSTS = [gethostname(), gethostbyname(gethostname()),'http://pollution-watch-wis-pollution-info.1d35.starter-us-east-1.openshiftapps.com/']  # specify complete host names here
+ALLOWED_HOSTS = ['http://pollution-watch-wis-pollution-info.1d35.starter-us-east-1.openshiftapps.com/', '10.128.29.0/24']  # specify complete host names here
 
 # Application definition
 
