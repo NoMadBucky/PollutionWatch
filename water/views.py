@@ -47,43 +47,7 @@ f = open(eff_viols_csv_file, 'r')
 try:
     for line in f:
         line = line.split(';')
-        tmp = Effluent_Data.objects.create(
-            npdes_id = line[0],
-            version_nmbr = line[1],
-            activity_id=line[2],
-            npdes_violation_id = line[3],
-            perm_feature_nmbr = line[4],
-            permit_activity_id = line[5],
-            dmr_form_value_id = line[6],
-            dmr_value_nmbr = line[7],
-            dmr_value_id = line[8],
-            dmr_parameter_id = line[9],
-            nodi_code = line[10],
-            adjusted_dmr_value_nmbr = line[11],
-            violation_type_code = line[12],
-            violation_type_desc = line[13],
-            violation_code = line[14],
-            violation_desc = line[15],
-            parameter_code = line[16],
-            parameter_desc = line[17],
-            monitoring_period_end_date = line[18],
-            exceedance_pct = line[19],
-            value_qualifier_code = line[20],
-            unit_code = line[21],
-            value_received_date = line[22],
-            days_late = line[23],
-            adjusted_dmr_standard_units = line[24],
-            limit_id = line[25],
-            dmr_value_standard_units = line[26],
-            value_type_code = line[27],
-            rnc_detection_code = line[28],
-            rnc_detection_desc = line[29],
-            rnc_detection_date = line[30],
-            rnc_resolution_code = line[31],
-            rnc_resolution_desc = line[32],
-            rnc_resolution_date = line[33],
-            statistical_base_code = line[34],
-            statistical_base_monthly_avg = line[35])
+        tmp = Effluent_Data.objects.create(npdes_id = line[0])
         eff_viols_csv_list.append(tmp)
     f.close()
 except OperationalError:
