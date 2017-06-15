@@ -26,7 +26,7 @@ SECRET_KEY = '212xtf%g#f)0($#0rht-3y93z$ua#u$nx#rdj(6uhxc*&$f-yt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ip_address','10.128.29.141','10.128.29.138', '10.128.29.75', '10.128.29.140', '10.128.29.230', '10.128.29.27']  # specify complete host names here
+ALLOWED_HOSTS = ['http://pollution-watch-wis-pollution-info.1d35.starter-us-east-1.openshiftapps.com/']  # specify complete host names here
 
 # Application definition
 
