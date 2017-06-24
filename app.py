@@ -12,5 +12,4 @@ mod_wsgi.server.start(
   '--url-alias', '/static/', './static/',
   '--application-type', 'module',
   '--entry-point', 'mysite.wsgi',
-  '--application-group','%{GLOBAL}'
 )
