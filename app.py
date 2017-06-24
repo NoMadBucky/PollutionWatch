@@ -12,5 +12,6 @@ mod_wsgi.server.start(
   '--url-alias', '/static/', './static/',
   '--application-type', 'module',
   '--entry-point', 'mysite.wsgi',
-  '--reload-on-changes'
+  '--reload-on-changes',
+  '--rewrite-rules rewrite.conf'
 )
