@@ -1,11 +1,8 @@
 #!/usr/bin/python
 import os
 import sys
-import wsgi
+from mysite import wsgi
 from cherrypy import wsgiserver
-
-#hack to make sure we can load wsgi.py as a module in this class
-sys.path.insert(0, os.path.dirname(__file__))
 
 virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')

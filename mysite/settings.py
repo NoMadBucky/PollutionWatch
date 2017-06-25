@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'easy_maps',
     'water',
-    'mod_wsgi.server'
+    'cherrypy'
 ]
 
 MIDDLEWARE_CLASSES = [
