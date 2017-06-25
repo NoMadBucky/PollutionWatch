@@ -1,4 +1,4 @@
-mod_wsgi
 Django
 django-tables2
 django-easy-maps
+cherrypy==3.6.0
