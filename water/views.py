@@ -4,8 +4,8 @@ import csv
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
-from water.tables import Effluent_Data_Table, Location_Table
-from water.models import Permittees, Effluent_Data, Location_Data
+from water.tables import Effluent_Data_Table
+from water.models import Permittees, Effluent_Data
 from django.db.utils import OperationalError
 
 violator_file = 'EPAWaterViolators.csv'
@@ -39,15 +39,15 @@ except OperationalError:
 
 eff_viols_csv_file = 'WI_NPDES_EFF_VIOLATIONS.csv'
 eff_viols_csv_list = []
-f = open(eff_viols_csv_file, 'r')
-try:
-    for line in f:
-        line = line.split(';')
-        tmp = Effluent_Data.objects.create(npdes_id = line[0])
-        eff_viols_csv_list.append(tmp)
-    f.close()
-except OperationalError:
-    pass
+#f = open(eff_viols_csv_file, 'r')
+#try:
+#    for line in f:
+#        line = line.split(';')
+#        tmp = Effluent_Data.objects.create(npdes_id = line[0])
+#        eff_viols_csv_list.append(tmp)
+#    f.close()
+#except OperationalError:
+#    pass
 
 def index(request):
     violator_list_ctime = os.path.getctime(violator_file)
@@ -75,6 +75,7 @@ def details(request, source_id):
                 #return render(request, 'details-nomap.html', {'permittee': permittee, 'address': search_address, 'compliance_dict': compliance_dict, 'snc_code': snc_code, 'download_file_loc': download_file_loc})
 
 def ViolationTable(request, source_id):
+
 #    effluent_list_ctime = os.path.getctime(eff_viols_csv)
 #    effluent_list_created_date = datetime.fromtimestamp(effluent_list_ctime).strftime('%A, %B %d, %Y')
     indiv_effluent_list = []
