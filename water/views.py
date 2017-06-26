@@ -72,6 +72,8 @@ def getEffViolsList():
     except OperationalError:
         pass
 
+    return eff_viols_list
+
 def index(request):
     violator_list_ctime = os.path.getctime(violator_file)
     violator_list_created_date = datetime.fromtimestamp(violator_list_ctime).strftime('%A, %B %d, %Y')
