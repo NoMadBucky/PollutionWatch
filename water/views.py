@@ -5,46 +5,80 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from water.tables import Effluent_Data_Table
-from water.models import Permittees
+from water.models import Permittees, Effluent_Data
 from django.db.utils import OperationalError
-#from water.load_eff_viols import eff_viols_csv_list
 
-violator_file = 'EPAWaterViolators.csv'
 violator_list = []
-f = open(violator_file, 'r')
-try:
-    for line in f:
-        line =  line.split(';')
-        tmp = Permittees.objects.create(
-            map_num = line[0],
-            source_id = line[1],
-            registry_id = line[2],
-            cwp_name = line[3],
-            cwp_street = line[4],
-            cwp_city = line[5],
-            cwp_state = line[6],
-            cwp_facility_type_indicator = line[7],
-            cwp_major_minor = line[8],
-            cwp_qtrs_in_nc = line[9],
-            cwp_current_viol = line[10],
-            fac_lat = line[11],
-            fac_long = line[12],
-            cwp_e90 = line[13],
-            cwp_formal_ea = line[14],
-            cwp_days_last_inspection = line[15],
-            poll_in_violation = line[16])
-        violator_list.append(tmp)
-    f.close()
-except OperationalError:
-    pass
+violator_file = 'EPAWaterViolators.csv'
+eff_viols_list = []
+eff_viols_file = 'WI_NPDES_EFF_VIOLATIONS.csv'
+
+def getViolatorsList():
+    if (len(violator_list) > 0):
+        return violator_list
+
+    f = None
+    try:
+        f = open(violator_file, 'r')
+    except IOError:
+        print("Working dir: " + os.path.dirname(os.path.realpath(__file__)))
+        raise
+
+    try:
+        for line in f:
+            line =  line.split(';')
+            tmp = Permittees.objects.create(
+                map_num = line[0],
+                source_id = line[1],
+                registry_id = line[2],
+                cwp_name = line[3],
+                cwp_street = line[4],
+                cwp_city = line[5],
+                cwp_state = line[6],
+                cwp_facility_type_indicator = line[7],
+                cwp_major_minor = line[8],
+                cwp_qtrs_in_nc = line[9],
+                cwp_current_viol = line[10],
+                fac_lat = line[11],
+                fac_long = line[12],
+                cwp_e90 = line[13],
+                cwp_formal_ea = line[14],
+                cwp_days_last_inspection = line[15],
+                poll_in_violation = line[16])
+            violator_list.append(tmp)
+        f.close()
+    except OperationalError:
+        pass
+
+    return violator_list
+
+def getEffViolsList():
+    if (len(eff_viols_list) > 0):
+        return eff_viols_list
+
+    f = None
+    try:
+        f = open(eff_viols_file, 'r')
+    except IOError:
+        print("Working dir: " + os.path.dirname(os.path.realpath(__file__)))
+        raise
+
+    try:
+        for line in f:
+            line =  line.split(';')
+            tmp = Effluent_Data.objects.create(npdes_id=line[0])
+            eff_viols_list.append(tmp)
+        f.close()
+    except OperationalError:
+        pass
 
 def index(request):
     violator_list_ctime = os.path.getctime(violator_file)
     violator_list_created_date = datetime.fromtimestamp(violator_list_ctime).strftime('%A, %B %d, %Y')
-    return render(request, 'index.html', {'violator_list': violator_list, 'violator_list_created_date': violator_list_created_date})
+    return render(request, 'index.html', {'violator_list': getViolatorsList(), 'violator_list_created_date': violator_list_created_date})
 
 def details(request, source_id):
-    for permittee in violator_list:
+    for permittee in getViolatorsList():
         if source_id in permittee.source_id:
             download_file_loc = ("https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?p_id=" + permittee.source_id + "&start_date=01/01/2013&end_date=03/31/2016")
             permittee.latitude = str(permittee.fac_lat)
@@ -57,13 +91,11 @@ def details(request, source_id):
                                     'download_file_loc': download_file_loc, 'static_map': static_map})
 
 def ViolationTable(request, source_id):
-    eff_viols_csv_list = []
-    #eff_viols_csv_list = []
     indiv_effluent_list = []
     count = 0
 
-    for permittee in violator_list:
-        for violation in eff_viols_csv_list:
+    for permittee in getViolatorsList():
+        for violation in getEffViolsList():
             if source_id in violation.npdes_id:
                 indiv_effluent_list.append(violation)
                 count = count + 1
