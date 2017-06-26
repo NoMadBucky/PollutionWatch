@@ -5,8 +5,9 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from water.tables import Effluent_Data_Table
-from water.models import Permittees, Effluent_Data
+from water.models import Permittees
 from django.db.utils import OperationalError
+from water.load_eff_viols import eff_viols_csv_list
 
 violator_file = 'EPAWaterViolators.csv'
 violator_list = []
@@ -37,18 +38,6 @@ try:
 except OperationalError:
     pass
 
-eff_viols_csv_file = 'WI_NPDES_EFF_VIOLATIONS.csv'
-eff_viols_csv_list = []
-#f = open(eff_viols_csv_file, 'r')
-#try:
-#    for line in f:
-#        line = line.split(';')
-#        tmp = Effluent_Data.objects.create(npdes_id = line[0])
-#        eff_viols_csv_list.append(tmp)
-#    f.close()
-#except OperationalError:
-#    pass
-
 def index(request):
     violator_list_ctime = os.path.getctime(violator_file)
     violator_list_created_date = datetime.fromtimestamp(violator_list_ctime).strftime('%A, %B %d, %Y')
@@ -63,16 +52,9 @@ def details(request, source_id):
             search_address = (permittee.cwp_street + ", " + permittee.cwp_city + ", " + permittee.cwp_state)
             location = permittee.latitude, permittee.longitude
             static_map = ("https://maps.google.com/maps/api/staticmap?zoom=11&size=450x450&sensor=false&markers=color:blue%7C"+permittee.latitude+','+permittee.longitude)
-            try:
-                return render(request, 'details.html',
+            return render(request, 'details.html',
                                   {'permittee': permittee, 'address': search_address, 'location': location,
                                     'download_file_loc': download_file_loc, 'static_map': static_map})
-            except GeocoderTimedOut:
-                return render(request, 'details.html',
-                                  {'permittee': permittee, 'address': search_address, 'location': location,
-                                    'download_file_loc': download_file_loc})
-                #HttpResponse ("Geocoder Timed Out. Please Try Again.")
-                #return render(request, 'details-nomap.html', {'permittee': permittee, 'address': search_address, 'compliance_dict': compliance_dict, 'snc_code': snc_code, 'download_file_loc': download_file_loc})
 
 def ViolationTable(request, source_id):
 
