@@ -4,12 +4,8 @@ import csv
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
-from django_tables2 import RequestConfig
 from water.tables import Effluent_Data_Table, Location_Table
 from water.models import Permittees, Effluent_Data, Location_Data
-from geopy.distance import distance as geopy_distance
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
 from django.db.utils import OperationalError
 
 violator_file = 'EPAWaterViolators.csv'
@@ -78,29 +74,6 @@ def details(request, source_id):
                 #HttpResponse ("Geocoder Timed Out. Please Try Again.")
                 #return render(request, 'details-nomap.html', {'permittee': permittee, 'address': search_address, 'compliance_dict': compliance_dict, 'snc_code': snc_code, 'download_file_loc': download_file_loc})
 
-def EffluentData (request, source_id):
-    file_name = ('/Users/barry_b_esq/Google Drive/PollutionWatch/EPAData/WI' + source_id + '-formatted.csv')
-    effluent_csv_list = MyCSvModel2.import_data(data=open(file_name))
-    effluent_list_ctime = os.path.getctime(file_name)
-    effluent_list_created_date = datetime.fromtimestamp(effluent_list_ctime).strftime('%A, %B %d, %Y')
-    for permittee in violator_csv_list:
-        if source_id in permittee.source_id:
-            return render(request, 'EffluentData.html', {'violator_list': violator_csv_list, 'permittee': permittee, 'effluent_list': effluent_csv_list, 'effluent_list_created_date': effluent_list_created_date})
-
-def violations(request, source_id):
-    violator_csv_list = MyCSvModel.import_data(data=open(violator_list))
-    file_name = ('/Users/barry_b_esq/Google Drive/PollutionWatch/EPAData/WI' + source_id + '-formatted.csv')
-    effluent_csv_list = MyCSvModel2.import_data(data=open(file_name))
-    effluent_list_ctime = os.path.getctime(file_name)
-    effluent_list_created_date = datetime.fromtimestamp(effluent_list_ctime).strftime('%A, %B %d, %Y')
-    effluent_list = []
-    for permittee in violator_csv_list:
-        if source_id in permittee.source_id:
-            for item in effluent_csv_list:
-                if item.violation_severity > 0:
-                    effluent_list.append(item)
-            return render(request, 'violations.html', {'permittee': permittee, 'effluent_list': effluent_list, 'effluent_list_created_date': effluent_list_created_date})
-
 def ViolationTable(request, source_id):
 #    effluent_list_ctime = os.path.getctime(eff_viols_csv)
 #    effluent_list_created_date = datetime.fromtimestamp(effluent_list_ctime).strftime('%A, %B %d, %Y')
@@ -118,36 +91,3 @@ def ViolationTable(request, source_id):
             return render(request, 'ViolationTable.html', {'table': table, 'permittee': permittee})
         else:
             return HttpResponse('No effluent data available')
-
-def search(request):
-    return render(request, 'search.html')
-
-def results(request):
-    if 'q' in request.GET and request.GET['q']:
-        try:
-            q = request.GET['q']
-            geolocator = Nominatim()
-            qhome = geolocator.geocode(q)
-            qhome_coords = (qhome.latitude, qhome.longitude)
-            count = 0
-            location_list = Location_Data
-            location_list.objects.all().delete()
-            for permittee in violator_csv_list:
-                location_coords = (permittee.fac_lat, permittee.fac_long)
-                if permittee.fac_lat > 0:
-                    d_qhome = geopy_distance(qhome_coords, location_coords)
-                    item = location_list(cwp_name = permittee.cwp_name, fac_lat = permittee.fac_lat, fac_long = permittee.fac_long, d_qhome = d_qhome.mi)
-                    item.save()
-                    count=count+1
-                else:
-                    pass
-        except GeocoderTimedOut:
-            return HttpResponse('GeoCoder Timed Out. Please try again.')
-        if location_list is "":
-            return HttpResponse('No search results. Please try again.')
-        else:
-            table = Location_Table(location_list.objects.all())
-            RequestConfig(request).configure(table)
-            return render(request, 'search_results.html', {'table': table, 'qhome': qhome, 'query': q})
-    else:
-        return HttpResponse('Search error. Please try again.')
