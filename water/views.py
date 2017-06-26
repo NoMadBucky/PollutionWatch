@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from water.tables import Effluent_Data_Table
 from water.models import Permittees
 from django.db.utils import OperationalError
-from water.load_eff_viols import eff_viols_csv_list
+#from water.load_eff_viols import eff_viols_csv_list
 
 violator_file = 'EPAWaterViolators.csv'
 violator_list = []
@@ -57,9 +57,8 @@ def details(request, source_id):
                                     'download_file_loc': download_file_loc, 'static_map': static_map})
 
 def ViolationTable(request, source_id):
-
-#    effluent_list_ctime = os.path.getctime(eff_viols_csv)
-#    effluent_list_created_date = datetime.fromtimestamp(effluent_list_ctime).strftime('%A, %B %d, %Y')
+    eff_viols_csv_list = []
+    #eff_viols_csv_list = []
     indiv_effluent_list = []
     count = 0
 
