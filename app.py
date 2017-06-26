@@ -1,7 +1,7 @@
 import os
 import mod_wsgi.server
 
-mod_wsgi-express.server.start(
+mod_wsgi.server.start(
   '--log-to-terminal',
   '--port', '8080',
   '--trust-proxy-header', 'X-Forwarded-For',
