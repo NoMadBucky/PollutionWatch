@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-DATE_FORMAT = '%d/%m/%Y'
+DATE_FORMAT = '%YYYY-%MM-%DD'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

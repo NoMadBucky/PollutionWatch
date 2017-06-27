@@ -66,7 +66,43 @@ def getEffViolsList():
     try:
         for line in f:
             line =  line.split(';')
-            tmp = Effluent_Data.objects.create(npdes_id=line[0])
+            tmp = Effluent_Data.objects.create(
+                npdes_id=line[0],
+                version_nmbr = line[1],
+                activity_id = line[2],
+                npdes_violation_id = line[3],
+                perm_feature_nmbr = line[4],
+                permit_activity_id = line[5],
+                dmr_form_value_id = line[6],
+                dmr_value_nmbr = line[7],
+                dmr_value_id = line[8],
+                dmr_parameter_id = line[9],
+                nodi_code = line[10],
+                adjusted_dmr_value_nmbr = line[11],
+                violation_type_code = line[12],
+                violation_type_desc = line[13],
+                violation_code = line[14],
+                violation_desc = line[15],
+                parameter_code = line[16],
+                parameter_desc = line[17],
+                monitoring_period_end_date = line[18],
+                exceedance_pct = line[19],
+                value_qualifier_code = line[20],
+                unit_code = line[21],
+                value_received_date = line[22],
+                days_late = line[23],
+                adjusted_dmr_standard_units = line[24],
+                limit_id = line[25],
+                dmr_value_standard_units = line[26],
+                value_type_code = line[27],
+                rnc_detection_code = line[28],
+                rnc_detection_desc = line[29],
+                rnc_detection_date = line[30],
+                rnc_resolution_code = line[31],
+                rnc_resolution_desc = line[32],
+                rnc_resolution_date = line[33],
+                statistical_base_code = line[34],
+                statistical_base_monthly_avg = line[35])
             eff_viols_list.append(tmp)
         f.close()
     except OperationalError:
@@ -85,25 +121,21 @@ def details(request, source_id):
             download_file_loc = ("https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?p_id=" + permittee.source_id + "&start_date=01/01/2013&end_date=03/31/2016")
             permittee.latitude = str(permittee.fac_lat)
             permittee.longitude = str(permittee.fac_long)
-            search_address = (permittee.cwp_street + ", " + permittee.cwp_city + ", " + permittee.cwp_state)
-            location = permittee.latitude, permittee.longitude
             embed_map = ("https://google.com/maps/embed/v1/place?key=AIzaSyA2pjsCYUlRAYfm96meB9LmtdgbJUVatig&q=" + permittee.latitude + ',' + permittee.longitude + "&zoom=14&maptype=satellite")
-            return render(request, 'details.html',
-                                  {'permittee': permittee, 'address': search_address, 'location': location,
-                                    'download_file_loc': download_file_loc, 'embed_map': embed_map})
+            return render(request, 'details.html', {'permittee': permittee, 'download_file_loc': download_file_loc, 'embed_map': embed_map})
 
 def ViolationTable(request, source_id):
     indiv_effluent_list = []
-    count = 0
-
     for permittee in getViolatorsList():
-        for violation in getEffViolsList():
-            if source_id in violation.npdes_id:
-                indiv_effluent_list.append(violation)
-                count = count + 1
+            if source_id in permittee.source_id:
+                name = permittee.cwp_name
+    for violation in getEffViolsList():
+        if source_id in violation.npdes_id:
+            indiv_effluent_list.append(violation)
+
+    if len(indiv_effluent_list) > 0:
         table = Effluent_Data_Table(indiv_effluent_list)
         table.paginate(page=request.GET.get('page', 1), per_page=25)
-        if count > 0:
-            return render(request, 'ViolationTable.html', {'table': table, 'permittee': permittee})
-        else:
-            return HttpResponse('No effluent data available')
+        return render(request, 'ViolationTable.html', {'table': table, 'permittee': name})
+    else:
+        return HttpResponse('No effluent data available')

@@ -1,6 +1,4 @@
 from django.db import models
-from django import forms
-from datetime import date
 
 class Permittees(models.Model):
     map_num = models.CharField(max_length = 2, default = '00')
@@ -46,7 +44,7 @@ class Effluent_Data(models.Model):
     exceedance_pct = models.FloatField(default=0, null=True)
     value_qualifier_code = models.CharField(max_length=3, blank=True)
     unit_code = models.CharField(max_length=2, blank=True)
-    value_received_date = models.DateField(null=True, blank=True, verbose_name='Date Reported')
+    value_received_date = models.CharField(max_length=20, null=True, blank=True, verbose_name='Date Reported')
     days_late = models.FloatField(default=0, null=True, verbose_name='Days Late')
     adjusted_dmr_standard_units = models.DecimalField(max_digits=22, decimal_places=5, null=True)
     limit_id = models.FloatField(default=0)
