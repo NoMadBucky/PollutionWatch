@@ -122,6 +122,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+STATIC_ROOT = "/usr/bin/static/"
+
 STATIC_URL = '/static/'
 
 EASY_MAPS_CENTER = (43.0677603, -89.39240919)
