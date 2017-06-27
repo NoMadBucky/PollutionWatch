@@ -87,10 +87,10 @@ def details(request, source_id):
             permittee.longitude = str(permittee.fac_long)
             search_address = (permittee.cwp_street + ", " + permittee.cwp_city + ", " + permittee.cwp_state)
             location = permittee.latitude, permittee.longitude
-            static_map = ("https://maps.google.com/maps/api/staticmap?zoom=11&size=450x450&sensor=false&markers=color:blue%7C"+permittee.latitude+','+permittee.longitude)
+            embed_map = ("https://google.com/maps/embed/v1/place?key=AIzaSyA2pjsCYUlRAYfm96meB9LmtdgbJUVatig&q=" + permittee.latitude + ',' + permittee.longitude + "&zoom=14&maptype=satellite")
             return render(request, 'details.html',
                                   {'permittee': permittee, 'address': search_address, 'location': location,
-                                    'download_file_loc': download_file_loc, 'static_map': static_map})
+                                    'download_file_loc': download_file_loc, 'embed_map': embed_map})
 
 def ViolationTable(request, source_id):
     indiv_effluent_list = []
