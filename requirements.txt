@@ -1,3 +1,4 @@
 Django
 django-tables2
 mod_wsgi
+geopy

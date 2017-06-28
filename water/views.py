@@ -4,8 +4,12 @@ import csv
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
-from water.tables import Effluent_Data_Table
-from water.models import Permittees, Effluent_Data
+from django_tables2 import RequestConfig
+from geopy.distance import distance as geopy_distance
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
+from water.tables import Effluent_Data_Table, Location_Table
+from water.models import Permittees, Effluent_Data, Location_Data
 from django.db.utils import OperationalError
 
 violator_list = []
@@ -139,3 +143,33 @@ def ViolationTable(request, source_id):
         return render(request, 'ViolationTable.html', {'table': table, 'permittee': name})
     else:
         return HttpResponse('No effluent data available')
+
+def search(request):
+    return render(request, 'search.html')
+
+def results(request):
+    if 'q' in request.GET and request.GET['q']:
+        try:
+            q = request.GET['q']
+            geolocator = Nominatim()
+            qhome = geolocator.geocode(q)
+            qhome_coords = (qhome.latitude, qhome.longitude)
+            count = 0
+            location_list = Location_Data
+            location_list.objects.all().delete()
+            for permittee in getViolatorsList():
+                location_coords = (permittee.fac_lat, permittee.fac_long)
+                d_qhome = geopy_distance(qhome_coords, location_coords)
+                item = location_list(cwp_name = permittee.cwp_name, fac_lat = permittee.fac_lat, fac_long = permittee.fac_long, d_qhome = d_qhome.mi)
+                item.save()
+                count=count+1
+        except GeocoderTimedOut:
+            return HttpResponse('GeoCoder Timed Out. Please try again.')
+        if location_list is "":
+            return HttpResponse('No search results. Please try again.')
+        else:
+            table = Location_Table(location_list.objects.all())
+            RequestConfig(request).configure(table)
+            return render(request, 'search_results.html', {'table': table, 'qhome': qhome, 'query': q})
+    else:
+        return HttpResponse('Search error. Please try again.')
