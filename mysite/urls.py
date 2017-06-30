@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from water import views
 
@@ -24,5 +26,16 @@ urlpatterns = [
     url(r'^water/results/', views.results, name='results'),
     url(r'^WI(?P<source_id>[0-9]+)/ViolationTable/$', views.ViolationTable, name='Violation Table'),
     url(r'^WI(?P<source_id>[0-9]+)/$', views.details, name='details'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-]
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+urlpatterns += staticfiles_urlpatterns()
+
+
+from django.conf import settings
+from django.contrib.staticfiles import views
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^static/(?P<path>.*)$', views.serve),
+    ]

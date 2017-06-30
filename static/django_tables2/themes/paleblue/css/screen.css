@@ -124,6 +124,4 @@ table.paleblue > tbody > tr > td > span.false {
 
 div.table-container {
     display: inline-block;
-    position: relative;
-    overflow:auto;
 }

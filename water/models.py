@@ -60,7 +60,7 @@ class Effluent_Data(models.Model):
     statistical_base_monthly_avg = models.CharField(max_length=1, blank=True)
 
 class Location_Data(models.Model):
-    cwp_name = models.CharField(max_length = 150)
-    fac_lat = models.DecimalField(decimal_places=4, max_digits=6, default= 0.0000)
-    fac_long = models.DecimalField(decimal_places=4, max_digits=6, default= 0.0000)
-    d_qhome = models.FloatField(default = 0.0)
+    cwp_name = models.CharField(max_length = 150, verbose_name="Permittee Name")
+    fac_lat = models.DecimalField(decimal_places=4, max_digits=6, default= 0.0000, verbose_name="Latitude")
+    fac_long = models.DecimalField(decimal_places=4, max_digits=6, default= 0.0000, verbose_name="Longitude")
+    d_qhome = models.FloatField(default = 0.0, verbose_name="Distance (mi)")
